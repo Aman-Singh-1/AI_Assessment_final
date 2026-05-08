@@ -48,16 +48,16 @@ Just open index.html` in any browser.
 - Click **Qualify This Lead →**
 - See the classification, score, reasoning, and AI-written reply
 
-#### 6 — (Optional) Explore the API
+#### 6 — API
 
 
 GET  http://localhost:8001/health          — health check
+
 POST http://localhost:8001/api/qualify-lead — classify a lead
+
 GET  http://localhost:8001/api/leads       — list all stored leads
+
 GET  http://localhost:8001/docs            — Swagger UI
-
-
-
 
 
 curl -X POST http://localhost:8001/api/qualify-lead \
