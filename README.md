@@ -11,15 +11,12 @@
 ```bash
 # If you have git
 git clone https://github.com/Aman-Singh-1/AI_Assessment_final
-cd varynt
+cd AI_Assessment_final
 
 # Or just copy the folder structure shown below
 ```
 
 #### 2 — Set up the backend
-
-```bash
-cd backend
 
 # Create a virtual environment (recommended)
 python -m venv venv
@@ -29,24 +26,19 @@ source venv/bin/activate        # macOS / Linux
 # Install dependencies
 pip install -r requirements.txt
 
-# Add your Anthropic API key
+# Add your GROQ API key
 cp .env.example .env
-# Open .env and set:  ANTHROPIC_API_KEY=sk-ant-xxxxxxxxxxxx
+# Open .env and set:  Groq_API_Key=sk-ant-xxxxxxxxxxxx
 ```
 
 #### 3 — Run the backend
 
-```bash
-# Load env and start the server
-export $(cat .env | xargs)          # macOS / Linux
-# Or on Windows: set ANTHROPIC_API_KEY=sk-ant-xxxx
 
 uvicorn main:app --reload --port 8000
-```
 
 You should see:
 ```
-INFO:     Uvicorn running on http://127.0.0.1:8000
+INFO:     Uvicorn running on http://127.0.0.1:8001
 INFO:     Application startup complete.
 ```
 
@@ -64,16 +56,16 @@ Just open index.html` in any browser.
 #### 6 — (Optional) Explore the API
 
 ```
-GET  http://localhost:8000/health          — health check
-POST http://localhost:8000/api/qualify-lead — classify a lead
-GET  http://localhost:8000/api/leads       — list all stored leads
-GET  http://localhost:8000/docs            — Swagger UI
+GET  http://localhost:8001/health          — health check
+POST http://localhost:8001/api/qualify-lead — classify a lead
+GET  http://localhost:8001/api/leads       — list all stored leads
+GET  http://localhost:8001/docs            — Swagger UI
 ```
 
 Example cURL:
 
 ```bash
-curl -X POST http://localhost:8000/api/qualify-lead \
+curl -X POST http://localhost:8001/api/qualify-lead \
   -H "Content-Type: application/json" \
   -d '{
     "name": "Priya Sharma",
