@@ -10,7 +10,7 @@
 
 ```bash
 # If you have git
-git clone <repo-url>
+git clone https://github.com/Aman-Singh-1/AI_Assessment_final
 cd varynt
 
 # Or just copy the folder structure shown below
