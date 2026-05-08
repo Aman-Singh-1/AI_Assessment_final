@@ -1,7 +1,4 @@
-"""
-VARYNT – AI Lead Qualification + Smart Response System
-Backend: FastAPI + Anthropic Claude
-"""
+
 
 import os
 import json
