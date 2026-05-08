@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>VARYNT – AI Lead Qualification</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #0a0a0f;
+    --paper: #f5f3ef;
+    --accent: #ff3c2e;
+    --accent2: #1a1aff;
+    --warm: #f0e9d6;
+    --muted: #888;
+    --border: #d8d3c8;
+    --hot: #ff3c2e;
+    --warm-c: #f59e0b;
+    --cold: #3b82f6;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Mono', monospace;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* GRAIN OVERLAY */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.5;
+  }
+
+  /* HEADER */
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2rem 3rem;
+    border-bottom: 1.5px solid var(--border);
+    position: sticky; top: 0;
+    background: var(--paper);
+    z-index: 10;
+  }
+
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.5rem;
+    letter-spacing: -0.04em;
+    color: var(--ink);
+  }
+  .logo span { color: var(--accent); }
+
+  .badge {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: 1px solid var(--border);
+    padding: 0.35rem 0.75rem;
+    border-radius: 2px;
+    color: var(--muted);
+  }
+
+  /* HERO */
+  .hero {
+    padding: 5rem 3rem 3rem;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 2rem; height: 1px;
+    background: var(--accent);
+  }
+
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    font-weight: 800;
+    line-height: 1.0;
+    letter-spacing: -0.04em;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: var(--accent);
+    position: relative;
+  }
+
+  .hero p {
+    font-size: 0.9rem;
+    line-height: 1.8;
+    color: var(--muted);
+    max-width: 480px;
+    margin-bottom: 3rem;
+  }
+
+  /* LAYOUT */
+  .main-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    max-width: 1100px;
+    margin: 0 auto;
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 6rem;
+  }
+
+  /* FORM PANEL */
+  .form-panel {
+    padding: 3rem;
+    border-right: 1.5px solid var(--border);
+  }
+
+  .panel-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .panel-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .field {
+    margin-bottom: 1.5rem;
+    position: relative;
+  }
+
+  label {
+    display: block;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+
+  input, textarea, select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: transparent;
+    border: 1.5px solid var(--border);
+    border-radius: 2px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+    appearance: none;
+  }
+
+  input:focus, textarea:focus, select:focus {
+    border-color: var(--ink);
+    background: white;
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 120px;
+    line-height: 1.6;
+  }
+
+  .submit-btn {
+    width: 100%;
+    padding: 1rem 2rem;
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    border-radius: 2px;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    position: relative;
+    overflow: hidden;
+    margin-top: 0.5rem;
+  }
+
+  .submit-btn:hover { background: var(--accent2); }
+  .submit-btn:active { transform: scale(0.99); }
+  .submit-btn:disabled { background: var(--border); cursor: not-allowed; }
+
+  .submit-btn .btn-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+
+  .spinner {
+    width: 16px; height: 16px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    display: none;
+  }
+  .loading .spinner { display: block; }
+  .loading .btn-text { display: none; }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* RESULT PANEL */
+  .result-panel {
+    padding: 3rem;
+    background: var(--warm);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .result-empty {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--muted);
+    gap: 1rem;
+  }
+
+  .result-empty .icon {
+    font-size: 3rem;
+    opacity: 0.3;
+  }
+
+  .result-empty p {
+    font-size: 0.8rem;
+    line-height: 1.8;
+    max-width: 240px;
+  }
+
+  /* RESULT CARD */
+  .result-card { display: none; }
+  .result-card.visible { display: block; animation: fadeUp 0.4s ease; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .tier-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.9rem;
+    border-radius: 2px;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  .tier-HOT  { background: var(--hot);    color: white; }
+  .tier-WARM { background: var(--warm-c); color: white; }
+  .tier-Cold, .tier-COLD { background: var(--cold);   color: white; }
+
+  .score-bar {
+    margin: 1.5rem 0;
+  }
+
+  .score-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .score-track {
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .score-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+    width: 0;
+  }
+
+  .section-title {
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 1.5rem 0 0.6rem;
+  }
+
+  .reasoning-text {
+    font-size: 0.8rem;
+    line-height: 1.7;
+    color: var(--ink);
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 0.85rem 1rem;
+  }
+
+  .reply-box {
+    font-size: 0.78rem;
+    line-height: 1.8;
+    color: var(--ink);
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 1rem;
+    white-space: pre-wrap;
+    font-family: 'DM Mono', monospace;
+    max-height: 220px;
+    overflow-y: auto;
+  }
+
+  .action-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.3rem 0.7rem;
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: 2px;
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    margin-top: 1rem;
+  }
+
+  .meta-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .meta-row span {
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  .copy-btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    padding: 0.35rem 0.75rem;
+    border: 1px solid var(--border);
+    background: transparent;
+    cursor: pointer;
+    border-radius: 2px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: background 0.15s;
+  }
+  .copy-btn:hover { background: var(--border); }
+
+  /* ERROR */
+  .error-msg {
+    background: #fff0ef;
+    border: 1.5px solid var(--hot);
+    border-radius: 2px;
+    padding: 0.75rem 1rem;
+    font-size: 0.78rem;
+    color: var(--hot);
+    margin-top: 1rem;
+    display: none;
+  }
+
+  /* STATS BAR */
+  .stats-bar {
+    display: flex;
+    gap: 3rem;
+    padding: 2rem 3rem;
+    border-top: 1.5px solid var(--border);
+    background: var(--ink);
+    color: var(--paper);
+    max-width: 1100px;
+    margin: 0 auto;
+    border-radius: 0 0 4px 4px;
+  }
+
+  .stat dt {
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 0.25rem;
+  }
+  .stat dd {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    header { padding: 1.25rem 1.5rem; }
+    .hero { padding: 3rem 1.5rem 2rem; }
+    .main-grid { grid-template-columns: 1fr; margin: 0 1rem 3rem; }
+    .form-panel { border-right: none; border-bottom: 1.5px solid var(--border); padding: 2rem; }
+    .result-panel { padding: 2rem; }
+    .form-row { grid-template-columns: 1fr; }
+    .stats-bar { flex-wrap: wrap; gap: 1.5rem; padding: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">VAR<span>Y</span>NT</div>
+  <div class="badge">AI Lead Engine v1.0</div>
+</header>
+
+<section class="hero" style="max-width:1100px;">
+  <div class="hero-eyebrow">Lead Intelligence System</div>
+  <h1>Qualify every lead.<br><em>Instantly.</em></h1>
+  <p>Drop in a lead. Our AI classifies intent, scores readiness, and writes a personalised reply — in under 3 seconds.</p>
+</section>
+
+<div style="max-width:1100px; margin: 0 auto; padding: 0 0 0 0;">
+<div class="main-grid">
+
+  <!-- FORM -->
+  <div class="form-panel">
+    <div class="panel-label">Lead Input</div>
+
+    <div class="form-row">
+      <div class="field">
+        <label>Full Name *</label>
+        <input type="text" id="name" placeholder="Priya Sharma" />
+      </div>
+      <div class="field">
+        <label>Email *</label>
+        <input type="email" id="email" placeholder="priya@startup.io" />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="field">
+        <label>Company</label>
+        <input type="text" id="company" placeholder="Acme Corp" />
+      </div>
+      <div class="field">
+        <label>Role</label>
+        <input type="text" id="role" placeholder="CMO / Founder / …" />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="field">
+        <label>Budget Signal</label>
+        <select id="budget">
+          <option value="">Not mentioned</option>
+          <option value="Under ₹50K/month">Under ₹50K/month</option>
+          <option value="₹50K–₹2L/month">₹50K–₹2L/month</option>
+          <option value="₹2L–₹10L/month">₹2L–₹10L/month</option>
+          <option value="₹10L+/month">₹10L+/month</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Timeline</label>
+        <select id="timeline">
+          <option value="">Not specified</option>
+          <option value="ASAP / under 2 weeks">ASAP / under 2 weeks</option>
+          <option value="This month">This month</option>
+          <option value="Next quarter">Next quarter</option>
+          <option value="Just exploring">Just exploring</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Message *</label>
+      <textarea id="message" placeholder="We're a Series A startup looking to automate our outbound qualification. Currently using SDRs and costs are unsustainable. Need something that can handle 500+ leads/month…"></textarea>
+    </div>
+
+    <button class="submit-btn" id="submitBtn" onclick="submitLead()">
+      <div class="btn-inner">
+        <div class="spinner"></div>
+        <span class="btn-text">Qualify This Lead →</span>
+      </div>
+    </button>
+
+    <div class="error-msg" id="errorMsg"></div>
+  </div>
+
+  <!-- RESULT -->
+  <div class="result-panel">
+    <div class="panel-label">AI Analysis</div>
+
+    <div class="result-empty" id="resultEmpty">
+      <div class="icon">◎</div>
+      <p>Submit a lead to see the AI classification, intent score, and personalised reply.</p>
+    </div>
+
+    <div class="result-card" id="resultCard">
+      <div id="tierBadge" class="tier-badge"></div>
+
+      <div class="score-bar">
+        <div class="score-label">
+          <span>Intent Score</span>
+          <span id="scoreValue">—</span>
+        </div>
+        <div class="score-track">
+          <div class="score-fill" id="scoreFill"></div>
+        </div>
+      </div>
+
+      <div class="section-title">Classification Reasoning</div>
+      <div class="reasoning-text" id="reasoningText">—</div>
+
+      <div class="section-title">Personalised Reply</div>
+      <div class="reply-box" id="replyBox">—</div>
+
+      <div class="action-chip" id="actionChip">
+        <span>▶</span>
+        <span id="actionText">—</span>
+      </div>
+
+      <div class="meta-row">
+        <span id="metaInfo">—</span>
+        <button class="copy-btn" onclick="copyReply()">Copy reply</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="stats-bar">
+  <dl class="stat">
+    <dt>Leads Processed</dt>
+    <dd id="statTotal">0</dd>
+  </dl>
+  <dl class="stat">
+    <dt>Hot Leads</dt>
+    <dd id="statHot">0</dd>
+  </dl>
+  <dl class="stat">
+    <dt>Warm Leads</dt>
+    <dd id="statWarm">0</dd>
+  </dl>
+  <dl class="stat">
+    <dt>Cold Leads</dt>
+    <dd id="statCold">0</dd>
+  </dl>
+  <dl class="stat">
+    <dt>Avg Score</dt>
+    <dd id="statAvg">—</dd>
+  </dl>
+</div>
+</div>
+
+<script>
+// CONFIG — point to your backend
+const API_BASE = 'http://localhost:8001';
+
+let stats = { total: 0, hot: 0, warm: 0, cold: 0, scores: [] };
+
+function updateStats(classification, score) {
+  stats.total++;
+  stats.scores.push(score);
+  const tier = classification.toLowerCase();
+  if (tier === 'hot')  stats.hot++;
+  if (tier === 'warm') stats.warm++;
+  if (tier === 'cold') stats.cold++;
+
+  document.getElementById('statTotal').textContent = stats.total;
+  document.getElementById('statHot').textContent   = stats.hot;
+  document.getElementById('statWarm').textContent  = stats.warm;
+  document.getElementById('statCold').textContent  = stats.cold;
+  const avg = Math.round(stats.scores.reduce((a,b) => a+b, 0) / stats.scores.length);
+  document.getElementById('statAvg').textContent   = avg;
+}
+
+async function submitLead() {
+  const name    = document.getElementById('name').value.trim();
+  const email   = document.getElementById('email').value.trim();
+  const message = document.getElementById('message').value.trim();
+
+  if (!name || !email || !message) {
+    showError('Please fill in Name, Email, and Message.');
+    return;
+  }
+
+  setLoading(true);
+  hideError();
+
+  const payload = {
+    name,
+    email,
+    company:  document.getElementById('company').value.trim(),
+    role:     document.getElementById('role').value.trim(),
+    budget:   document.getElementById('budget').value,
+    timeline: document.getElementById('timeline').value,
+    message,
+    source:   'web-demo',
+  };
+
+  try {
+    const res = await fetch(`${API_BASE}/api/qualify-lead`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.detail || `HTTP ${res.status}`);
+    }
+
+    const data = await res.json();
+    renderResult(data);
+    updateStats(data.classification, data.score);
+
+  } catch (err) {
+    showError(`Error: ${err.message}. Make sure the backend is running on ${API_BASE}`);
+  } finally {
+    setLoading(false);
+  }
+}
+
+function renderResult(data) {
+  document.getElementById('resultEmpty').style.display = 'none';
+
+  const card = document.getElementById('resultCard');
+  card.classList.remove('visible');
+  void card.offsetWidth; // reflow to re-trigger animation
+  card.classList.add('visible');
+
+  const tier = data.classification;
+  const badge = document.getElementById('tierBadge');
+  const dot = tier === 'Hot' ? '🔥' : tier === 'Warm' ? '☀' : '❄';
+  badge.textContent = `${dot} ${tier} Lead`;
+  badge.className = `tier-badge tier-${tier.toUpperCase()}`;
+
+  document.getElementById('scoreValue').textContent = `${data.score}/100`;
+  const fill = document.getElementById('scoreFill');
+  fill.style.width = '0';
+  fill.style.background = tier === 'Hot' ? 'var(--hot)' : tier === 'Warm' ? 'var(--warm-c)' : 'var(--cold)';
+  setTimeout(() => { fill.style.width = data.score + '%'; }, 50);
+
+  document.getElementById('reasoningText').textContent = data.reasoning;
+  document.getElementById('replyBox').textContent      = data.personalised_reply;
+  document.getElementById('actionText').textContent    = data.next_action;
+
+  const conf = Math.round(data.confidence * 100);
+  document.getElementById('metaInfo').textContent =
+    `ID: ${data.lead_id.slice(0,8)}… · Confidence: ${conf}%`;
+}
+
+function copyReply() {
+  const text = document.getElementById('replyBox').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.querySelector('.copy-btn');
+    btn.textContent = 'Copied ✓';
+    setTimeout(() => btn.textContent = 'Copy reply', 2000);
+  });
+}
+
+function setLoading(on) {
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = on;
+  on ? btn.classList.add('loading') : btn.classList.remove('loading');
+}
+
+function showError(msg) {
+  const el = document.getElementById('errorMsg');
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
+function hideError() {
+  document.getElementById('errorMsg').style.display = 'none';
+}
+
+// Allow Enter key in message field to submit
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('message').addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.ctrlKey) submitLead();
+  });
+});
+</script>
+</body>
+</html>
