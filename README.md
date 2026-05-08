@@ -50,16 +50,16 @@ Just open index.html` in any browser.
 
 #### 6 — (Optional) Explore the API
 
-```
+
 GET  http://localhost:8001/health          — health check
 POST http://localhost:8001/api/qualify-lead — classify a lead
 GET  http://localhost:8001/api/leads       — list all stored leads
 GET  http://localhost:8001/docs            — Swagger UI
-```
 
-Example cURL:
 
-```bash
+
+
+
 curl -X POST http://localhost:8001/api/qualify-lead \
   -H "Content-Type: application/json" \
   -d '{
@@ -70,6 +70,5 @@ curl -X POST http://localhost:8001/api/qualify-lead \
     "budget": "₹2L–₹10L/month",
     "timeline": "This month",
     "message": "We need to automate outbound qualification for 500 leads/month. Current SDR costs unsustainable. Want to pilot ASAP."
-  }'
-```
-sment | Dream Reflection Media*
+  }
+
