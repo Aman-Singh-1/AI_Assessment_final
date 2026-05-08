@@ -13,15 +13,14 @@
 git clone https://github.com/Aman-Singh-1/AI_Assessment_final
 cd AI_Assessment_final
 
-# Or just copy the folder structure shown below
-```
+
 
 #### 2 — Set up the backend
 
 # Create a virtual environment (recommended)
 python -m venv venv
-source venv/bin/activate        # macOS / Linux
-# venv\Scripts\activate          # Windows
+source venv/bin/activate       
+
 
 # Install dependencies
 pip install -r requirements.txt
@@ -34,13 +33,9 @@ cp .env.example .env
 #### 3 — Run the backend
 
 
-uvicorn main:app --reload --port 8000
+uvicorn main:app --reload --port 8001
 
-You should see:
-```
-INFO:     Uvicorn running on http://127.0.0.1:8001
-INFO:     Application startup complete.
-```
+
 
 #### 4 — Open the frontend
 
