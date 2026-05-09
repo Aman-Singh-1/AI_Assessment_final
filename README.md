@@ -63,7 +63,9 @@ python -m http.server 3000
 #### 5 — Test it
 
 - Fill in the form (name, email, message are required)
+  
 - Click **Qualify This Lead →**
+  
 - See the classification, score, reasoning, and AI-written reply
 
 #### 6 — API
@@ -78,15 +80,40 @@ GET  http://localhost:8001/api/leads       — list all stored leads
 GET  http://localhost:8001/docs            — Swagger UI
 
 
-curl -X POST http://localhost:8001/api/qualify-lead \
-  -H "Content-Type: application/json" \
-  -d '{
-    "name": "Priya Sharma",
-    "email": "priya@startup.io",
-    "company": "GrowthStack",
-    "role": "CMO",
-    "budget": "₹2L–₹10L/month",
-    "timeline": "This month",
-    "message": "We need to automate outbound qualification for 500 leads/month. Current SDR costs unsustainable. Want to pilot ASAP."
-  }
+curl -X POST "http://localhost:8001/api/qualify-lead" \
+-H "Content-Type: application/json" \
+-d '{
+  "name": "Priya Sharma",
+  "email": "priya@startup.io",
+  "company": "GrowthStack",
+  "role": "CMO",
+  "budget": "₹2L–₹10L/month",
+  "timeline": "This month",
+  "message": "We need to automate outbound qualification for 500 leads/month. Current SDR costs unsustainable. Want to pilot ASAP."
+}'
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  "timeline": "This month",
+  "message": "We need to automate outbound qualification for 500 leads/month. Current SDR costs unsustainable. Want to pilot ASAP."
+}'
