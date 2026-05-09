@@ -2,6 +2,12 @@
 
 > **Final Assessment Submission** 
 
+# Architecture :
+
+Raw Input -> Validation (Pydantic) -> Normalisation(strip whitespace, length check)-> Embedding (sentence-transformers)->L2 Normalisation — convert to unit vector
+   
+   -> SQLite write (text + metadata) → rowid
+   ->FAISS write (vector + rowid) → persist to disk
 
 
 ### Step-by-Step Setup
