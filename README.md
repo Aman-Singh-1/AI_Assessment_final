@@ -4,16 +4,22 @@
 
 # Architecture :
 Raw Input
+
    │
    ▼ Validation (Pydantic) — reject empty/oversized/malformed
+   
    │
    ▼ Normalisation — strip whitespace, length check
+   
    │
    ▼ Embedding (sentence-transformers) — float32 numpy array
+   
    │
    ▼ L2 Normalisation — convert to unit vector
+   
    │
    ├── SQLite write (text + metadata) → rowid
+   
    └── FAISS write (vector + rowid) → persist to disk
 
 
