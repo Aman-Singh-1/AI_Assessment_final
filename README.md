@@ -59,8 +59,7 @@ uvicorn main:app --reload --port 8001
 #### 4 — Open the frontend
 
 Just open index.html` in any browser. 
-
-
+python -m http.server 3000
 #### 5 — Test it
 
 - Fill in the form (name, email, message are required)
